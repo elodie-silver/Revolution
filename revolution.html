@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revolution – Eine Geschichte aus Kaelthir</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#14161a;--card:#1d2026;--line:#343a40;--ink:#e8e0cf;--mute:#a79f8d;--gold:#c2a15a;--green:#5f8a5a;--ember:#d98a3d}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f1e9d6;--card:#faf4e6;--line:#d3c6a6;--ink:#2a2a24;--mute:#6b6450;--gold:#8f6f25;--green:#46703f;--ember:#b4651c}}
+:root[data-theme="light"]{--bg:#f1e9d6;--card:#faf4e6;--line:#d3c6a6;--ink:#2a2a24;--mute:#6b6450;--gold:#8f6f25;--green:#46703f;--ember:#b4651c}
+:root[data-theme="dark"]{--bg:#14161a;--card:#1d2026;--line:#343a40;--ink:#e8e0cf;--mute:#a79f8d;--gold:#c2a15a;--green:#5f8a5a;--ember:#d98a3d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(900px 400px at 50% -80px,rgba(217,138,61,.16),transparent),var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Times New Roman",serif}
+header{text-align:center;padding:48px 20px 20px}
+h1{font-size:clamp(2.2rem,8vw,3.8rem);letter-spacing:.14em;margin:0;color:var(--gold);font-weight:400;text-transform:uppercase}
+.sub{color:var(--mute);font-style:italic;margin:.4rem 0 0}
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav button,.btn{background:none;border:1px solid var(--line);color:var(--ink);padding:8px 16px;border-radius:999px;font:inherit;font-size:.9rem;cursor:pointer}
+nav button.on{border-color:var(--gold);color:var(--gold)}
+.btn{border-color:var(--ember);color:var(--ember)}
+main{max-width:860px;margin:0 auto;padding:24px 18px 60px}
+section{display:none}section.on{display:block}
+h2{color:var(--gold);font-weight:400;border-bottom:1px solid var(--line);padding-bottom:.3rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0}
+.card h3{margin:0 0 4px;color:var(--ink);font-size:1.1rem}
+.tag{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.stat{text-align:center}.stat b{display:block;font-size:2rem;color:var(--gold);font-weight:400}.stat span{color:var(--mute);font-size:.85rem}
+.row{display:grid;grid-template-columns:130px 1fr 60px;gap:10px;align-items:center;font-size:.85rem;margin:6px 0}
+.bar{height:12px;background:var(--line);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--green)}.bar i.n{background:var(--ember)}.bar i.g{background:var(--gold)}
+.row span:last-child{text-align:right;color:var(--mute)}
+.note{color:var(--mute);font-size:.85rem}
+.wrap{overflow-x:auto}.more{display:none;margin:8px 0 0;color:var(--ink);font-size:.9rem;border-top:1px dashed var(--line);padding-top:8px}.open .more{display:block}.click{cursor:pointer;transition:border-color .2s}.click:hover,.open{border-color:var(--gold)}.stops{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.stops button{background:none;border:1px solid var(--line);color:var(--mute);border-radius:999px;padding:6px 12px;font:inherit;font-size:.85rem;cursor:pointer}.stops button.on{border-color:var(--green);color:var(--green)}.stops button.past{color:var(--ink)}.route{height:6px;background:var(--line);border-radius:3px;overflow:hidden}.route i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--ember));transition:width .5s}.fl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.fl button{background:none;border:1px solid var(--line);color:var(--mute);border-radius:999px;padding:5px 12px;font:inherit;font-size:.85rem;cursor:pointer}.fl button.on{border-color:var(--ember);color:var(--ember)}input[type=range]{width:100%;accent-color:var(--gold)}.wall{display:flex;gap:3px;margin:10px 0;flex-wrap:wrap}.wall i{width:22px;height:14px;border-radius:2px;background:var(--line);transition:background .3s}.wall i.on{background:var(--gold)}
+input[type=number]{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:110px;font:inherit}
+@media(max-width:520px){.row{grid-template-columns:90px 1fr 48px}}
+</style>
+</head>
+<body>
+<header>
+<h1>Revolution</h1>
+<p class="sub">Eine Geschichte aus Kaelthir – zwei Stimmen, ein verschwiegenes Reich</p>
+<p><button class="btn" id="share">Seite teilen</button></p>
+</header>
+<nav id="nav">
+<button data-t="story" class="on">Die Geschichte</button>
+<button data-t="chars">Figuren</button>
+<button data-t="chap">Kapitel</button>
+<button data-t="stats">Fortschritt &amp; Stats</button>
+<button data-t="quiz">Quiz</button>
+</nav>
+<main>
+
+<section id="story" class="on">
+<h2>Worum es geht</h2>
+<p>Kaelthir ist eine Stadt hinter hohen Mauern, in der magische Wesen Schutz finden. Aus dem Nichts gebaut, voller Gebäude, die es eigentlich nicht geben dürfte. Wer dort herrscht, weiß draußen niemand genau. Man erzählt sich nur Schauergeschichten.</p>
+<p>Die Waldelfe <b>Thaliara</b> lebt als Schreinerin am Rand der Menschenstadt und glaubt noch an ein Miteinander. Als sie in einem vergrabenen Buch Notizen ihrer alten Freundin Elowen findet, beschließt sie, nach Kaelthir zu reisen. Dort liest <b>Noarika</b>, Tochter der Herrschenden, dieselbe Geschichte aus der anderen Richtung und beginnt, die Eltern und das Reich zu hinterfragen.</p>
+<div class="grid">
+<div class="card"><span class="tag">Stimme 1</span><h3>Thaliara</h3><p class="note">Draußen: Vorurteile, Rosehall, eine Reise mit unerwarteter Begleitung.</p></div>
+<div class="card"><span class="tag">Stimme 2</span><h3>Noarika</h3><p class="note">Drinnen: Universität, Archiv, Höhlen und die Frage, wer Kaelthir wirklich regiert.</p></div>
+</div>
+<h2>Thaliaras Weg</h2>
+<div class="card"><div class="route"><i id="routeBar"></i></div><div class="stops" id="stops"></div><p id="stopTxt" class="note">Wähle einen Ort auf der Reise.</p></div>
+<h2>Die Jahre nach Zars Tod</h2>
+<div class="card"><p class="note">Elowens Rückblick. Enthält Hinweise auf spätere Ereignisse.</p><button class="btn" id="spoil">Spoiler anzeigen</button><div id="tl" hidden><input type="range" id="yr" min="0" max="2" value="0"><div class="wall" id="wall"></div><b id="yrH"></b><p id="yrT" class="note"></p></div></div>
+<p class="note">Spoilerarm gehalten. Die Seite zeigt den aktuellen Stand der Geschichte; der Text selbst steht hier nicht.</p>
+</section>
+
+<section id="chars">
+<h2>Figuren</h2>
+<div class="grid" id="charGrid"></div>
+</section>
+
+<section id="chap">
+<h2>Kapitel</h2>
+<div class="fl" id="fl"><button data-f="all" class="on">Alle</button><button data-f="t">Thaliara</button><button data-f="n">Noarika</button><button data-f="x">Interludes</button></div>
+<div id="chapList"></div>
+</section>
+
+<section id="stats">
+<h2>Fortschritt &amp; Stats</h2>
+<div class="grid">
+<div class="card stat"><b id="sWords"></b><span>Wörter insgesamt</span></div>
+<div class="card stat"><b id="sChap"></b><span>Abschnitte geschrieben</span></div>
+<div class="card stat"><b id="sAvg"></b><span>Wörter pro Kapitel (Schnitt)</span></div>
+<div class="card stat"><b id="sRead"></b><span>Lesezeit (ca.)</span></div>
+</div>
+<div class="card">
+<h3>Fortschritt zum Wortziel</h3>
+<p class="note">Wortziel: <input type="number" id="goal" min="1000" step="1000" value="50000"> Wörter (nur in deinem Browser gespeichert)</p>
+<div class="bar"><i class="g" id="goalBar"></i></div>
+<p class="note" id="goalTxt"></p>
+</div>
+<div class="card"><h3>Wörter pro Abschnitt</h3><div id="bars"></div></div>
+<div class="card"><h3>Zwei Stimmen im Vergleich</h3><div id="voices"></div></div>
+<div class="card"><h3>Meistgenannte Namen</h3><div id="names"></div></div>
+<p class="note">Stand: Thaliara – 5 ist der letzte geschriebene Abschnitt. Zahlen aus der aktuellen Textdatei, Wörter nach einfacher Zählung.</p>
+</section>
+
+<section id="quiz">
+<h2>Welcher Charakter passt zu dir?</h2>
+<div class="card" id="qz"></div>
+</section>
+</main>
+<script>
+const CH=[["Prolog",798,"x"],["Thaliara – 1",3212,"t"],["Noarika – 1",2713,"n"],["Vorwort (Elowen)",357,"x"],["Thaliara – 2",2978,"t"],["Noarika – 2",3008,"n"],["Thaliara – 3",3227,"t"],["Noarika – 3",3334,"n"],["Thaliara – 4",3101,"t"],["Noarika – 4",3068,"n"],["Thaliara – 5",3026,"t"]];
+const SUM={"Prolog":"Das Schloss, die vier Herrschenden und ein Streit um die Mauer.","Thaliara – 1":"Ein Fund bei den Wurzeln des Donnerbaums und der Weg nach Rosehall.","Noarika – 1":"Universität, Kaiven und ein Buch im Archiv.","Vorwort (Elowen)":"Elowens Bericht über die Jahre nach der Flucht.","Thaliara – 2":"Eine Nacht in Rosehall und eine neue Bekanntschaft.","Noarika – 2":"Zorn auf die Eltern und ein gefährlicher Plan.","Thaliara – 3":"Zweifel an der Reisebegleitung.","Noarika – 3":"Was die Herrschenden verschwiegen haben.","Thaliara – 4":"Aufbruch und eine Begegnung am Wegesrand.","Noarika – 4":"Spaziergang durch die Stadt, Fragen an Kaelthirs Herrschaft.","Thaliara – 5":"Nach dem Schrecken geht die Reise weiter."};
+const PEOPLE=[["Thaliara","Waldelfe, Schreinerin, Schreiberin der „Bücher“"],["Noarika","Blaue Haut, weißes Haar. Studiert, interessiert sich für Architektur"],["Kaiven","Noarikas bester Freund, immer ein schiefes Grinsen"],["Sidra","Hüterin von Rosehall, Thaliaras Zweitleserin"],["Sammy","Menschenfrau, Reisebegleiterin mit Geheimnissen"],["Elowen","Eine der Herrschenden, Autorin des Vorworts"],["Isilvara","Dunkelelfe, strenge Lehrerin mit weicher Seite"],["Rinavorn &amp; Vaelion","Noarikas Eltern, unter den Herrschenden"],["Malin","Halbelfe, Tochter von Sidra und Tarak"],["Anya","Zwergin mit stacheligem Haar"]];
+const NAMES=[["Thaliara",288],["Noarika",177],["Sammy",123],["Sidra",117],["Kai / Kaiven",143],["Anya",39],["Elowen",32],["Malin",14]];
+const $=id=>document.getElementById(id),fmt=n=>n.toLocaleString("de-DE");
+const total=CH.reduce((a,c)=>a+c[1],0),main=CH.filter(c=>c[2]!="x");
+const T=CH.filter(c=>c[2]=="t").reduce((a,c)=>a+c[1],0),N=CH.filter(c=>c[2]=="n").reduce((a,c)=>a+c[1],0);
+$("charGrid").innerHTML=PEOPLE.map(p=>`<div class="card"><h3>${p[0]}</h3><p class="note">${p[1]}</p></div>`).join("");
+$("chapList").innerHTML=CH.map(c=>`<div class="card"><span class="tag">${c[2]=="t"?"Thaliara":c[2]=="n"?"Noarika":"Interlude"}</span><h3>${c[0]}</h3><p class="note">${SUM[c[0]]} · ${fmt(c[1])} Wörter</p></div>`).join("");
+$("sWords").textContent=fmt(total);$("sChap").textContent=CH.length;
+$("sAvg").textContent=fmt(Math.round(main.reduce((a,c)=>a+c[1],0)/main.length));
+const mins=Math.round(total/200);$("sRead").textContent=Math.floor(mins/60)+" Std "+mins%60+" Min";
+const mx=Math.max(...CH.map(c=>c[1]));
+$("bars").innerHTML=CH.map(c=>`<div class="row"><span>${c[0]}</span><div class="bar"><i class="${c[2]=="n"?"n":""}" style="width:${c[1]/mx*100}%"></i></div><span>${fmt(c[1])}</span></div>`).join("");
+$("voices").innerHTML=[["Thaliara",T,""],["Noarika",N,"n"]].map(v=>`<div class="row"><span>${v[0]}</span><div class="bar"><i class="${v[2]}" style="width:${v[1]/T*100}%"></i></div><span>${fmt(v[1])}</span></div>`).join("");
+$("names").innerHTML=NAMES.map(v=>`<div class="row"><span>${v[0]}</span><div class="bar"><i class="g" style="width:${v[1]/288*100}%"></i></div><span>${v[1]}×</span></div>`).join("");
+function goal(){const g=Math.max(1000,+$("goal").value||50000),p=Math.min(100,total/g*100);
+$("goalBar").style.width=p+"%";$("goalTxt").textContent=p.toFixed(1).replace(".",",")+" % geschafft · noch "+fmt(Math.max(0,g-total))+" Wörter";
+try{localStorage.setItem("rev-goal",g)}catch(e){}}
+try{const s=localStorage.getItem("rev-goal");if(s)$("goal").value=s}catch(e){}
+$("goal").oninput=goal;goal();
+const MORE={"Thaliara":"Hält am Miteinander fest und vergrub zwei Bücher unter dem Donnerbaum.","Noarika":"In Kaelthirs Straßen aufgewachsen, geht eigene Wege und stellt Fragen.","Kaiven":"Neugierig und ehrgeizig, erkundet mit Noarika die Höhlen unter dem Land.","Sidra":"Verwandelte Rosehall in einen Nutzgarten voller Zuflucht.","Sammy":"Ihr Grund für die Reise nach Kaelthir bleibt vertraulich.","Elowen":"Hielt ihre Sicht der Dinge in einem Buch fest.","Isilvara":"Wirkt unnahbar, ist aber meist harmloser, als sie klingt.","Rinavorn &amp; Vaelion":"Ihre Streitigkeiten nennen sie „Diskussionen“.","Malin":"Treibt in Rosehall die Aufnahme von Flüchtlingen voran.","Anya":"Zwergin, der Noarika noch eine Entschuldigung schuldet."};
+$("charGrid").innerHTML=PEOPLE.map(p=>`<div class="card click"><h3>${p[0]}</h3><p class="note">${p[1]}</p><p class="more">${MORE[p[0]]||""}</p></div>`).join("");
+$("charGrid").onclick=e=>{const c=e.target.closest(".card");if(c)c.classList.toggle("open")};
+function chap(f){$("chapList").innerHTML=CH.filter(c=>f=="all"||c[2]==f).map(c=>`<div class="card"><span class="tag">${c[2]=="t"?"Thaliara":c[2]=="n"?"Noarika":"Interlude"}</span><h3>${c[0]}</h3><p class="note">${SUM[c[0]]} · ${fmt(c[1])} Wörter</p></div>`).join("")}
+chap("all");
+$("fl").onclick=e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#fl button").forEach(x=>x.classList.remove("on"));b.classList.add("on");chap(b.dataset.f)};
+const ST=[["Donnerbaum","Zwischen den Wurzeln des Baums liegt die Kiste mit Thaliaras Büchern. Eines wurde verändert."],["Menschenstadt","Thaliaras Schreinerei, Vorurteile auf den Straßen und eine Begegnung mit Sammy."],["Rosehall","Sidras Anwesen, Zuflucht für Verstoßene. Malin und Sidra schließen sich dem Plan an."],["Der Weg","Ein Zwischenfall am Wegesrand, dann Nächte unter freiem Himmel nahe dem Vulkan."],["Kaelthir","Die Tore waren schon geschlossen. Was dahinter liegt, ist noch offen."]];
+$("stops").innerHTML=ST.map((s,i)=>`<button data-i="${i}">${s[0]}</button>`).join("");
+$("stops").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.i;document.querySelectorAll("#stops button").forEach((x,j)=>{x.classList.toggle("on",j==i);x.classList.toggle("past",j<i)});$("routeBar").style.width=(i+1)/ST.length*100+"%";$("stopTxt").textContent=ST[i][1]};
+const YR=[["1 Jahr nach Zars Tod","Ein Ort ist gefunden, erste Häuser und Felder entstehen. Die Magie nährt den Boden."],["5 Jahre nach Zars Tod","Eine neue Fähigkeit wird entdeckt, die Ressourcen und neue Bewohner nach Kaelthir bringt. Sie bleibt geheim."],["9 Jahre nach Zars Tod","Ein Rückschlag in der Menschenstadt. Die Feindseligkeit wächst, nur noch zwei dürfen hinaus."]];
+function yr(){const i=+$("yr").value;$("yrH").textContent=YR[i][0];$("yrT").textContent=YR[i][1];$("wall").innerHTML=Array.from({length:30},(_,k)=>`<i class="${k<(i+1)*10?"on":""}"></i>`).join("")}
+$("yr").oninput=yr;yr();
+$("spoil").onclick=()=>{$("tl").hidden=false;$("spoil").hidden=true}
+document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("section,#nav button").forEach(e=>e.classList.remove("on"));$(b.dataset.t).classList.add("on");b.classList.add("on");scrollTo(0,0)});
+$("share").onclick=async()=>{const u=location.href,d={title:"Revolution",text:"Revolution – eine Geschichte aus Kaelthir",url:u};
+try{if(navigator.share){await navigator.share(d);return}}catch(e){}
+try{await navigator.clipboard.writeText(u);$("share").textContent="Link kopiert"}catch(e){prompt("Link zum Teilen:",u)}};
+const QZ=[["Es ist Samstagabend. Was machst du am liebsten?",[["Karten und Wein mit neuen Leuten","MT"],["Etwas Neues entdecken, zum Beispiel Höhlen","KN"],["Etwas Nützliches bauen oder pflanzen","SL"],["Einen Plan für die Zukunft schmieden","EI"]]],["Ein Streit eskaliert. Wie reagierst du?",[["Ich rede, bis alle zuhören","TE"],["Ich sage direkt, was Sache ist","IN"],["Ich lenke mit Humor ab","MK"],["Ich kümmere mich um die Betroffenen","SL"]]],["Was treibt dich an?",[["Dass sich etwas verändern muss","NK"],["Die Meinen zu beschützen","EI"],["Dass alle miteinander leben können","TL"],["Freiheit und Abenteuer","MK"]]],["Wie gehst du mit Geheimnissen um?",[["Meine behalte ich für mich","MI"],["Fremde finde ich heraus","KN"],["Ich schreibe sie auf","ET"],["Ich teile sie mit Vertrauten","SL"]]],["Wo wohnst du am liebsten?",[["Am Waldrand, nah an der Natur","TS"],["Mitten in einer belebten Stadt","MK"],["Hinter hohen, sicheren Mauern","EI"],["In einem Haus, das ich selbst entworfen habe","NL"]]]];
+const CN={T:["Thaliara","Du glaubst an das Miteinander, auch wenn es aussichtslos wirkt, und packst an, wo es nötig ist."],N:["Noarika","Du hinterfragst, was dir erzählt wird, und gehst neugierig deinen eigenen Weg."],K:["Kaiven","Du bist ehrgeizig, charmant und immer bereit für den nächsten Plan."],S:["Sidra","Du gibst anderen Zuflucht und behältst dabei einen kühlen Kopf."],M:["Sammy","Du bist schlagfertig und charmant und hast gern ein Geheimnis in der Tasche."],E:["Elowen","Du denkst langfristig, schützt die Deinen und schreibst die Dinge nieder."],I:["Isilvara","Du wirkst unnahbar und direkt, bist aber loyal gegenüber denen, die es verdienen."],L:["Malin","Du siehst, wo Hilfe fehlt, und sorgst dafür, dass sie ankommt."]};
+let qi=0,qs={};
+function qz(){const q=$("qz");if(qi>=QZ.length){const w=Object.entries(qs).sort((a,b)=>b[1]-a[1])[0][0];q.innerHTML=`<span class="tag">Dein Ergebnis</span><h3>${CN[w][0]}</h3><p>${CN[w][1]}</p><button class="btn" id="again">Nochmal</button>`;$("again").onclick=()=>{qi=0;qs={};qz()};return}
+q.innerHTML=`<span class="tag">Frage ${qi+1} von ${QZ.length}</span><h3>${QZ[qi][0]}</h3><div class="stops" style="flex-direction:column;align-items:stretch">${QZ[qi][1].map((a,i)=>`<button data-i="${i}" style="text-align:left;border-radius:10px">${a[0]}</button>`).join("")}</div>`}
+$("qz").onclick=e=>{const b=e.target.closest("[data-i]");if(!b)return;[...QZ[qi][1][+b.dataset.i][1]].forEach(c=>qs[c]=(qs[c]||0)+1);qi++;qz()};
+qz();
+</script>
+</body>
+</html>
